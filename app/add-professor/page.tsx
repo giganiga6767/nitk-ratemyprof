@@ -4,7 +4,6 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 const DEPARTMENTS = [
-const DEPARTMENTS = [
   { code: "AMH", name: "Applied Mechanics & Hydraulics" },
   { code: "CHL", name: "Chemical Engineering" },
   { code: "CHY", name: "Chemistry" },
@@ -24,9 +23,15 @@ const DEPARTMENTS = [
 export default function AddProfessorPage() {
   const [name, setName] = useState("");
   const [dept, setDept] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!dept) {
+      toast.error("Please select a department");
+      return;
+    }
+    setLoading(true);
     try {
       const res = await fetch("/api/professors", {
         method: "POST",
@@ -34,57 +39,65 @@ export default function AddProfessorPage() {
         body: JSON.stringify({ name: name.trim(), department: dept }),
       });
       if (res.ok) {
-        toast.success("Professor added! Pending approval.");
-        window.location.href = "/";
+        toast.success("Professor added! Pending admin approval.");
+        setName("");
+        setDept("");
       } else {
         const errData = await res.json();
         alert("Server says: " + JSON.stringify(errData));
       }
     } catch (err) {
-      alert("Network failed. Check your API route.");
+      toast.error("Something went wrong. Try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 p-6 md:p-12 font-sans flex items-center justify-center">
-      <div className="max-w-xl w-full bg-white/70 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-2xl border border-white">
-        <h1 className="text-3xl font-black mb-2 text-slate-900 tracking-tight">Add Professor</h1>
-        <p className="text-slate-500 text-sm mb-8 font-medium">Add a new entry to the NITK directory.</p>
+    <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-purple-50 to-teal-100 p-6 flex flex-col items-center justify-center font-sans">
+      <Link href="/" className="mb-8 text-indigo-600 font-bold hover:underline flex items-center gap-2 transition-all hover:gap-3">
+        ← Back to Search
+      </Link>
+      
+      <div className="w-full max-w-lg bg-white/70 backdrop-blur-2xl p-8 md:p-10 rounded-[2.5rem] shadow-2xl border border-white">
+        <h1 className="text-3xl font-black mb-2 text-slate-900 tracking-tight text-center">Add Professor</h1>
+        <p className="text-slate-500 text-sm mb-8 font-medium italic text-center text-balance">Help build the NITK community database.</p>
         
         <form onSubmit={handleSubmit} className="space-y-6">
           <div>
-            <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Full Name</label>
+            <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Professor Full Name</label>
             <input 
-              className="w-full p-4 rounded-2xl bg-white border border-slate-200 outline-none focus:ring-2 focus:ring-blue-400 transition-all font-medium" 
-              placeholder="e.g. Dr. Satya Sai"
-              value={name}
-              onChange={e => setName(e.target.value)} 
-              required 
+              className="w-full p-4 rounded-2xl bg-white/50 border border-slate-200 focus:ring-2 focus:ring-indigo-400 outline-none transition-all font-medium text-slate-800" 
+              placeholder="e.g. Dr. Ramesh Kumar"
+              value={name} onChange={(e) => setName(e.target.value)} required
             />
           </div>
 
           <div>
             <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Department</label>
-            <select 
-              className="w-full p-4 rounded-2xl bg-white border border-slate-200 outline-none focus:ring-2 focus:ring-blue-400 transition-all font-medium appearance-none"
-              value={dept}
-              onChange={e => setDept(e.target.value)} 
-              required
-            >
-              <option value="">Select Department...</option>
-              {DEPARTMENTS.map(d => (
-                <option key={d.code} value={d.code}>{d.name} ({d.code})</option>
-              ))}
-            </select>
+            <div className="relative">
+              <select 
+                className="w-full p-4 rounded-2xl bg-white/50 border border-slate-200 focus:ring-2 focus:ring-indigo-400 outline-none transition-all font-medium text-slate-800 appearance-none cursor-pointer"
+                value={dept} onChange={(e) => setDept(e.target.value)} required
+              >
+                <option value="">Select Department...</option>
+                {DEPARTMENTS.map(d => (
+                  <option key={d.code} value={d.code}>{d.name} ({d.code})</option>
+                ))}
+              </select>
+              <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none text-slate-400">
+                ▼
+              </div>
+            </div>
           </div>
 
-          <button className="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98]">
-            Submit for Review
+          <button 
+            disabled={loading}
+            className="w-full bg-indigo-600 text-white font-black py-4 rounded-2xl hover:bg-indigo-700 transition-all shadow-lg shadow-indigo-200 active:scale-[0.98] disabled:opacity-50"
+          >
+            {loading ? "Submitting..." : "Submit for Review"}
           </button>
         </form>
-        <Link href="/" className="block text-center mt-6 text-sm font-bold text-slate-400 hover:text-blue-600 transition-colors">
-          ← Cancel and Go Back
-        </Link>
       </div>
     </div>
   );
