@@ -1,27 +1,27 @@
 {
-  "name": "@workspace/website",
-  "version": "0.0.0",
+  "name": "nitk-ratemyprof",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev -H 0.0.0.0 -p $PORT",
+    "dev": "next dev",
     "build": "next build",
-    "start": "next start -H 0.0.0.0 -p $PORT",
+    "start": "next start",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "next": "^15.5.14",
-    "pg": "^8.20.0",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "next": "^15.0.0",
+    "pg": "^8.11.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4.2.2",
-    "@types/node": "catalog:",
-    "@types/pg": "^8.18.0",
-    "@types/react": "catalog:",
-    "@types/react-dom": "catalog:",
-    "postcss": "^8.5.8",
-    "tailwindcss": "catalog:",
-    "typescript": "~5.9.3"
+    "@tailwindcss/postcss": "^4.0.0",
+    "@types/node": "^20.0.0",
+    "@types/pg": "^8.11.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "postcss": "^8.0.0",
+    "tailwindcss": "^4.0.0",
+    "typescript": "^5.0.0"
   }
 }
