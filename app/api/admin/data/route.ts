@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import pool from "@/lib/db";
 
-// Keep your existing GET function
 export async function GET() {
   try {
     const [pendingResult, professorsResult, statsResult] = await Promise.all([
@@ -33,7 +32,6 @@ export async function GET() {
   }
 }
 
-// --- ADD THIS DELETE FUNCTION BELOW ---
 export async function DELETE(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
@@ -43,7 +41,7 @@ export async function DELETE(request: Request) {
       return NextResponse.json({ error: "Professor ID is required" }, { status: 400 });
     }
 
-    // This deletes the professor from the database
+    // Deletes the professor (CASCADE in SQL will handle reviews)
     await pool.query("DELETE FROM professors WHERE id = $1", [id]);
 
     return NextResponse.json({ message: "Professor deleted successfully" });
