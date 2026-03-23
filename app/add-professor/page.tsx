@@ -4,19 +4,19 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 const DEPARTMENTS = [
-  { code: "AM", name: "Applied Mechanics & Hydraulics" },
-  { code: "CH", name: "Chemical Engineering" },
-  { code: "CY", name: "Chemistry" },
-  { code: "CV", name: "Civil Engineering" },
-  { code: "CS", name: "Computer Science & Engineering" },
-  { code: "EE", name: "Electrical & Electronics Engineering" },
-  { code: "EC", name: "Electronics & Communication Engineering" },
-  { code: "IT", name: "Information Technology" },
-  { code: "MA", name: "Mathematical & Computational Sciences" },
-  { code: "ME", name: "Mechanical Engineering" },
+  { code: "AMH", name: "Applied Mechanics & Hydraulics" },
+  { code: "CHL", name: "Chemical Engineering" },
+  { code: "CHY", name: "Chemistry" },
+  { code: "CVL", name: "Civil Engineering" },
+  { code: "CSE", name: "Computer Science & Engineering" },
+  { code: "EEE", name: "Electrical & Electronics Engineering" },
+  { code: "ECE", name: "Electronics & Communication Engineering" },
+  { code: "INF", name: "Information Technology" },
+  { code: "MAC", name: "Mathematical & Computational Sciences" },
+  { code: "MEC", name: "Mechanical Engineering" },
   { code: "MME", name: "Metallurgical & Materials Engineering" },
-  { code: "MN", name: "Mining Engineering" },
-  { code: "PH", name: "Physics" },
+  { code: "MNG", name: "Mining Engineering" },
+  { code: "PHY", name: "Physics" },
   { code: "SOM", name: "School of Management" }
 ];
 
