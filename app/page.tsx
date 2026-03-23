@@ -25,7 +25,7 @@ export default async function HomePage() {
   const professors = await getProfessorsWithStats();
 
   return (
-    {/* --- NEW BACKGROUND WRAPPER WITH ACTUAL NITK PHOTO --- */}
+
     <div className="min-h-screen bg-[url('https://upload.wikimedia.org/wikipedia/commons/a/a2/NITK_Main_Building.jpg')] bg-cover bg-center bg-fixed">
       
       {/* --- FROSTED GLASS OVERLAY --- */}
