@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "react-hot-toast"; // <-- Imported the sleek popups
 
 interface Props {
   professorId: string;
@@ -62,20 +63,20 @@ export default function ReviewForm({ professorId }: Props) {
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [error, setError] = useState("");
+  // Deleted the clunky error state!
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!qualityRating || !difficultyRating) {
-      setError("Please tap the stars to rate quality and difficulty.");
+      toast.error("Please tap the stars to rate quality and difficulty."); // <-- Sleek error
       return;
     }
     if (!courseCode.trim() || !comment.trim()) {
-      setError("Please fill in all fields.");
+      toast.error("Please fill in all fields."); // <-- Sleek error
       return;
     }
     setLoading(true);
-    setError("");
+    
     try {
       const res = await fetch("/api/reviews", {
         method: "POST",
@@ -92,9 +93,11 @@ export default function ReviewForm({ professorId }: Props) {
         const data = await res.json();
         throw new Error(data.error ?? "Failed to submit");
       }
+      
+      toast.success("Review submitted anonymously! 🎭"); // <-- Sleek success popup!
       setSuccess(true);
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      toast.error(err instanceof Error ? err.message : "Something went wrong"); // <-- Sleek error
     } finally {
       setLoading(false);
     }
@@ -127,15 +130,6 @@ export default function ReviewForm({ professorId }: Props) {
           Your identity is never recorded. This review is completely anonymous and will only appear after admin review.
         </p>
       </div>
-
-      {error && (
-        <div className="mb-4 flex items-start gap-2 bg-gray-50 border border-gray-300 text-gray-700 rounded-lg px-3 py-2.5 text-sm">
-          <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-          </svg>
-          {error}
-        </div>
-      )}
 
       <form onSubmit={handleSubmit} className="space-y-5">
         <StarPicker
