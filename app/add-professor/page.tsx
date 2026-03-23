@@ -4,20 +4,20 @@ import { toast } from "react-hot-toast";
 import Link from "next/link";
 
 const DEPARTMENTS = [
-  { code: "AMH", name: "Applied Mechanics & Hydraulics" },
-  { code: "CHL", name: "Chemical Engineering" },
-  { code: "CHY", name: "Chemistry" },
-  { code: "CVL", name: "Civil Engineering" },
   { code: "CSE", name: "Computer Science & Engineering" },
-  { code: "EEE", name: "Electrical & Electronics Engineering" },
   { code: "ECE", name: "Electronics & Communication Engineering" },
-  { code: "INF", name: "Information Technology" },
-  { code: "MAC", name: "Mathematical & Computational Sciences" },
-  { code: "MEC", name: "Mechanical Engineering" },
-  { code: "MME", name: "Metallurgical & Materials Engineering" },
-  { code: "MNG", name: "Mining Engineering" },
-  { code: "PHY", name: "Physics" },
-  { code: "SOM", name: "School of Management" }
+  { code: "Mech", name: "Mechanical Engineering" },
+  { code: "Civil", name: "Civil Engineering" },
+  { code: "Electrical", name: "Electrical & Electronics Engineering" },
+  { code: "IT", name: "Information Technology" },
+  { code: "Chemical", name: "Chemical Engineering" },
+  { code: "Metallurgical", name: "Metallurgical & Materials Engineering" },
+  { code: "Mining", name: "Mining Engineering" },
+  { code: "MACS", name: "Mathematical & Computational Sciences" },
+  { code: "Physics", name: "Physics" },
+  { code: "Chemistry", name: "Chemistry" },
+  { code: "HSSM", name: "Humanities, Social Sciences & Management" },
+  { code: "SoM", name: "School of Management" }
 ];
 
 export default function AddProfessorPage() {
