@@ -6,7 +6,13 @@ export type Department =
   | "Electrical"
   | "IT"
   | "Chemical"
-  | "Metallurgical";
+  | "Metallurgical"
+  | "Mining"
+  | "MACS"
+  | "Physics"
+  | "Chemistry"
+  | "HSSM"
+  | "SoM";
 
 export const DEPARTMENTS: Department[] = [
   "CSE",
@@ -17,6 +23,12 @@ export const DEPARTMENTS: Department[] = [
   "IT",
   "Chemical",
   "Metallurgical",
+  "Mining",
+  "MACS",
+  "Physics",
+  "Chemistry",
+  "HSSM",
+  "SoM",
 ];
 
 export interface Professor {
