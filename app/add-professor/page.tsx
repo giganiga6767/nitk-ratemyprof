@@ -3,6 +3,24 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
 
+const DEPARTMENTS = [
+  { code: "AM", name: "Applied Mechanics & Hydraulics" },
+  { code: "CH", name: "Chemical Engineering" },
+  { code: "CY", name: "Chemistry" },
+  { code: "CV", name: "Civil Engineering" },
+  { code: "CS", name: "Computer Science & Engineering" },
+  { code: "EE", name: "Electrical & Electronics Engineering" },
+  { code: "EC", name: "Electronics & Communication Engineering" },
+  { code: "IT", name: "Information Technology" },
+  { code: "MA", name: "Mathematical & Computational Sciences" },
+  { code: "ME", name: "Mechanical Engineering" },
+  { code: "MT", name: "Metallurgical & Materials Engineering" },
+  { code: "MN", name: "Mining Engineering" },
+  { code: "PH", name: "Physics" },
+  { code: "SM", name: "School of Management" },
+  { code: "WRE", name: "Water Resources & Ocean Engineering" }
+];
+
 export default function AddProfessorPage() {
   const [name, setName] = useState("");
   const [dept, setDept] = useState("");
@@ -16,40 +34,57 @@ export default function AddProfessorPage() {
         body: JSON.stringify({ name: name.trim(), department: dept }),
       });
       if (res.ok) {
-        toast.success("Success!");
+        toast.success("Professor added! Pending approval.");
         window.location.href = "/";
       } else {
         const errData = await res.json();
         alert("Server says: " + JSON.stringify(errData));
       }
     } catch (err) {
-      alert("Network failed. Is the API route actually at /api/professors/route.ts?");
+      alert("Network failed. Check your API route.");
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-100 p-10 font-sans">
-      <div className="max-w-md mx-auto bg-white p-8 rounded-2xl shadow-lg">
-        <h1 className="text-2xl font-bold mb-6">Add Professor</h1>
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <input 
-            className="w-full p-3 border rounded" 
-            placeholder="Name" 
-            onChange={e => setName(e.target.value)} required 
-          />
-          <select 
-            className="w-full p-3 border rounded" 
-            onChange={e => setDept(e.target.value)} required
-          >
-            <option value="">Select Dept</option>
-            <option value="EC">ECE</option>
-            <option value="CS">CSE</option>
-            <option value="PH">Physics</option>
-            <option value="ME">Mech</option>
-          </select>
-          <button className="w-full bg-blue-600 text-white py-3 rounded font-bold">Submit</button>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-100 p-6 md:p-12 font-sans flex items-center justify-center">
+      <div className="max-w-xl w-full bg-white/70 backdrop-blur-xl p-8 rounded-[2.5rem] shadow-2xl border border-white">
+        <h1 className="text-3xl font-black mb-2 text-slate-900 tracking-tight">Add Professor</h1>
+        <p className="text-slate-500 text-sm mb-8 font-medium">Add a new entry to the NITK directory.</p>
+        
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
+            <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Full Name</label>
+            <input 
+              className="w-full p-4 rounded-2xl bg-white border border-slate-200 outline-none focus:ring-2 focus:ring-blue-400 transition-all font-medium" 
+              placeholder="e.g. Dr. Satya Sai"
+              value={name}
+              onChange={e => setName(e.target.value)} 
+              required 
+            />
+          </div>
+
+          <div>
+            <label className="block text-xs font-black uppercase tracking-widest text-slate-400 mb-2 ml-1">Department</label>
+            <select 
+              className="w-full p-4 rounded-2xl bg-white border border-slate-200 outline-none focus:ring-2 focus:ring-blue-400 transition-all font-medium appearance-none"
+              value={dept}
+              onChange={e => setDept(e.target.value)} 
+              required
+            >
+              <option value="">Select Department...</option>
+              {DEPARTMENTS.map(d => (
+                <option key={d.code} value={d.code}>{d.name} ({d.code})</option>
+              ))}
+            </select>
+          </div>
+
+          <button className="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 transition-all shadow-lg active:scale-[0.98]">
+            Submit for Review
+          </button>
         </form>
-        <Link href="/" className="block text-center mt-4 text-sm text-slate-500 underline">Back</Link>
+        <Link href="/" className="block text-center mt-6 text-sm font-bold text-slate-400 hover:text-blue-600 transition-colors">
+          ← Cancel and Go Back
+        </Link>
       </div>
     </div>
   );
