@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 import pool from "@/lib/db";
 import type { Professor } from "@/lib/constants";
 import ProfessorList from "./ProfessorList";
