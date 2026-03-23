@@ -4,36 +4,43 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { DEPARTMENTS, type Department } from "@/lib/constants";
 import Link from "next/link";
+import { toast } from "react-hot-toast"; // <-- 1. Imported the new sleek popups
 
 export default function AddProfessorPage() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [department, setDepartment] = useState<Department | "">("");
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  // We deleted the clunky error state variable!
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!name.trim() || !department) {
-      setError("Please fill in all fields.");
+      toast.error("Please fill in all fields."); // <-- 2. Sleek error notification
       return;
     }
+    
     setLoading(true);
-    setError("");
+    
     try {
       const res = await fetch("/api/professors", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: name.trim(), department }),
       });
+      
       if (!res.ok) {
         const data = await res.json();
         throw new Error(data.error ?? "Failed to add professor");
       }
+      
       const prof = await res.json();
+      
+      toast.success("Professor added successfully! 🎉"); // <-- 3. Sleek success notification!
       router.push(`/professors/${prof.id}`);
+      
     } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Something went wrong");
+      toast.error(err instanceof Error ? err.message : "Something went wrong");
       setLoading(false);
     }
   }
@@ -64,15 +71,6 @@ export default function AddProfessorPage() {
         </div>
 
         <div className="h-px bg-gray-100 my-5" />
-
-        {error && (
-          <div className="mb-5 flex items-start gap-2 bg-gray-50 border border-gray-300 text-gray-700 rounded-lg px-3 py-2.5 text-sm">
-            <svg className="w-4 h-4 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-              <path fillRule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clipRule="evenodd" />
-            </svg>
-            {error}
-          </div>
-        )}
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
