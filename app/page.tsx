@@ -25,14 +25,9 @@ export default async function HomePage() {
   const professors = await getProfessorsWithStats();
 
   return (
-
     <div className="min-h-screen bg-[url('https://upload.wikimedia.org/wikipedia/commons/a/a2/NITK_Main_Building.jpg')] bg-cover bg-center bg-fixed">
-      
-      {/* --- FROSTED GLASS OVERLAY --- */}
       <div className="min-h-screen bg-white/85 backdrop-blur-sm">
-        
         <main className="max-w-5xl mx-auto px-4 py-12 relative z-10">
-          {/* --- HERO SECTION --- */}
           <div className="text-center mb-10">
             <h1 className="text-4xl font-extrabold text-gray-900 mb-4 tracking-tight drop-shadow-sm">
               Rate Your NITK Professors
@@ -42,7 +37,6 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {/* --- GUIDELINES CARD --- */}
           <div className="bg-blue-50/90 backdrop-blur-md border border-blue-200 rounded-2xl p-6 mb-12 shadow-sm">
             <div className="flex items-center gap-2 mb-3 text-blue-800">
               <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
@@ -52,17 +46,16 @@ export default async function HomePage() {
             </div>
             <div className="grid md:grid-cols-2 gap-6">
               <ul className="space-y-2 text-sm text-blue-900 list-disc ml-5">
-                <li><strong>Full Names Only:</strong> When adding a professor, use their official full name (e.g., Dr. Ramesh Kumar).</li>
-                <li><strong>Constructive Criticism:</strong> Focus on teaching quality, grading patterns, and course difficulty.</li>
+                <li><strong>Full Names Only:</strong> When adding a professor, use their official full name.</li>
+                <li><strong>Constructive Criticism:</strong> Focus on teaching quality and grading.</li>
               </ul>
               <ul className="space-y-2 text-sm text-blue-900 list-disc ml-5">
-                <li><strong>Professionalism:</strong> No profanity, personal attacks, or defamation. Bad words = Instant rejection.</li>
-                <li><strong>Anonymity:</strong> Your identity is never recorded. Review safely.</li>
+                <li><strong>Professionalism:</strong> No profanity or personal attacks.</li>
+                <li><strong>Anonymity:</strong> Your identity is never recorded.</li>
               </ul>
             </div>
           </div>
 
-          {/* --- PROFESSOR LIST & SEARCH --- */}
           <ProfessorList professors={professors} />
           
           <div className="mt-16 text-center text-gray-700 font-semibold text-sm drop-shadow-sm">
